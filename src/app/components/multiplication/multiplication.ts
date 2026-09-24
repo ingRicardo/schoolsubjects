@@ -99,6 +99,16 @@ export class Multiplication {
     };
   });
 
+  count = signal<number>(0);
+
+  increment(): void {
+    this.count.update(val => val + 1);
+  }
+
+  decrement(): void {
+    this.count.update(val => val - 1);
+  }
+
   genRandTable(){
 
     console.log("genRandTable");
@@ -119,8 +129,10 @@ export class Multiplication {
    isResOk(){
     if(this.inputres() == this.ranresult()){
         this.answerStatus.set('correct');
+        this.increment();
     }else {
        this.answerStatus.set('wrong');
+       this.decrement();
     }
     this.inputres.set(0);
     setTimeout(() => this.answerStatus.set(null), 4000);
