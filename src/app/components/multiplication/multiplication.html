@@ -6,45 +6,39 @@
 
 <div class="button-container">
   @for (btn of buttons; track btn.id) {
-    <!-- Merging fallback object properties with your array items -->
-    <button   (click)="handleButtonClick(( { ...fallbackAction, ...btn } ).actionType)">
-      {{ btn.label }}
-    </button>
+  <!-- Merging fallback object properties with your array items -->
+  <button (click)="handleButtonClick(( { ...fallbackAction, ...btn } ).actionType)">
+    {{ btn.label }}
+  </button>
   }
 </div>
 
-
-    <div class="table-container">
-      <h2>Multiplication Table for {{ tableData().Value }}</h2>
-        @if(this.basetable() != undefined){
-          <div class="timetablerow">
-
-         
-            <div class="input-row-group">
-               <label for="baseValue"> {{ this.basetable()}} X {{ this.ranmulti()}} = </label>
-               <input type="number" name="inputres" [(ngModel)]= "inputres" /></div>
-
-            </div>
-
-        }
-          <div>
-            <!--
+<div class="table-container">
+  <h2>Multiplication Table for {{ tableData().Value }}</h2>
+  @if(this.basetable() != undefined){
+  <div class="timetablerow">
+    <div class="input-row-group">
+      <label for="baseValue"> {{ this.basetable()}} X {{ this.ranmulti()}} = </label>
+      <input type="number" name="inputres" [(ngModel)]="inputres" />
+    </div>
+  </div>
+  }
+  <div>
+    <!--
             <button type="button" class="btn-primary" (click)="genRandTable()">Play</button>-->
-              @if(this.basetable() != undefined){
-                <button type="button" class="btn-primary" (click)="isResOk()">Check</button>
-              }
-          </div>
-          <div class="counter-card">
-              <h2>Points</h2>
-              @if(count() > 0){
-                <div class="count-display-good">{{ count() }}</div>
-              }@else {
-                <div class="count-display-bad">{{ count() }}</div>
-              }
-              
-            
-                 
-          </div>
+    @if(this.basetable() != undefined){
+    <button type="button" class="btn-primary" (click)="isResOk()">Check</button>
+    }
+  </div>
+  <div class="counter-card">
+    <h2>Points</h2>
+    @if(count() > 0){
+    <div class="count-display-good">{{ count() }}</div>
+    }@else {
+    <div class="count-display-bad">{{ count() }}</div>
+    }
+
+  </div>
   <!--
       <ul>
         @for (row of tableData().tableResults; track row.multiplier) {
@@ -54,21 +48,25 @@
         }
       </ul>
   -->
-    </div>
+</div>
 <!-- Main Alert Box Container -->
 @switch (answerStatus()) {
-  @case ('correct') {
-    <div class="alert alert-success">
-      <span class="alert-icon">✓</span>
-      <div class="alert-content"><strong>CORRECT</strong> :)</div>
-      <button class="alert-close" (click)="answerStatus.set(null)">×</button>
-    </div>
-  }
-  @case ('wrong') {
-    <div class="alert alert-error">
-      <span class="alert-icon">✕</span>
-      <div class="alert-content"><strong>WRONG</strong> X</div>
-      <button class="alert-close" (click)="answerStatus.set(null)">×</button>
-    </div>
-  }
+@case ('correct') {
+<div class="alert-overlay">
+  <div class="alert alert-success">
+    <span class="alert-icon">✓</span>
+    <div class="alert-content"><strong>CORRECT</strong> :)</div>
+    <button class="alert-close" (click)="answerStatus.set(null)">×</button>
+  </div>
+</div>
+}
+@case ('wrong') {
+<div class="alert-overlay">
+  <div class="alert alert-error">
+    <span class="alert-icon">✕</span>
+    <div class="alert-content"><strong>WRONG</strong> :(</div>
+    <button class="alert-close" (click)="answerStatus.set(null)">×</button>
+  </div>
+</div>
+}
 }
