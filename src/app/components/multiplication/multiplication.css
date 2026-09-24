@@ -99,17 +99,30 @@
 }
 
 
+/* Full-screen backdrop wrapper to center the element */
+.alert-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4); /* Dimmed backdrop background */
+  z-index: 1000; /* Ensure it stays on top of other content */
+}
+
 /* Base Alert Structure shared by both states */
 .alert {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 1rem 1.25rem;
-  margin: 1rem 0;
-  max-width: 400px;
-  border-radius: 0.375rem;
-  font-family: sans-serif;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  gap: 12px;
+  padding: 16px 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 280px;
+  max-width: 90vw;
   animation: slideIn 0.25s ease-out;
 }
 
