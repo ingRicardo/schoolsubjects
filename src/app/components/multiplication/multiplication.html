@@ -11,59 +11,14 @@
   }
 </div>
 
-@if(t1()){
-    <div>
-      <label for="1"> 1</label>
+    <div class="table-container">
+      <h2>Multiplication Table for {{ tableData().Value }}</h2>
+      
+      <ul>
+        @for (row of tableData().tableResults; track row.multiplier) {
+          <li>
+            {{ tableData().Value }} x {{ row.multiplier }} = {{ row.result }}
+          </li>
+        }
+      </ul>
     </div>
-}
-
-@if(t2()){
-    <div>
-      <label for="2"> 2</label>
-    </div>
-}
-@if(t3()){
-    <div>
-      <label for="3"> 3</label>
-    </div>
-}
-@if(t4()){
-    <div>
-      <label for="4"> 4</label>
-    </div>
-}
-@if(t5()){
-    <div>
-      <label for="5"> 5</label>
-    </div>
-}
-@if(t6()){
-    <div>
-      <label for="6"> 6</label>
-    </div>
-}
-@if(t7()){
-    <div>
-      <label for="7"> 7</label>
-    </div>
-}
-@if(t8()){
-    <div>
-      <label for="8"> 8</label>
-    </div>
-}
-@if(t9()){
-    <div>
-      <label for="9"> 9</label>
-    </div>
-}
-@if(t10()){
-    <div>
-      <label for="10"> 10</label>
-    </div>
-}
-@if(t11()){
-    <div>
-      <label for="11"> 11</label>
-    </div>
-}

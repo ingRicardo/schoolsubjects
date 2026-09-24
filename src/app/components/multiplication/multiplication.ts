@@ -1,9 +1,21 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 
 interface ButtonConfig {
   id: string;
   label: string;
   actionType: string;
+}
+
+// Define the structure for each multiplication row
+interface MultiplicationResult {
+  multiplier: number;
+  result: number;
+}
+
+// Define the main object structure
+interface TimesTableConfig {
+  Value: number;
+  tableResults: MultiplicationResult[];
 }
 
 @Component({
@@ -31,7 +43,8 @@ export class Multiplication {
     this.t1, this.t2, this.t3, this.t4, this.t5, 
     this.t6, this.t7, this.t8, this.t9, this.t10, this.t11
   ];
-  
+   baseValue = signal<number>(0);
+
   buttons: ButtonConfig[] = [
     { id: 'btn-1', label: '1', actionType: '1' },
     { id: 'btn-2', label: '2', actionType: '2' },
@@ -47,7 +60,6 @@ export class Multiplication {
   ];
 
 
-   
   handleButtonClick(action: string): void {
     console.log(`Button action triggered: ${action}`);
     // Parse the string action '1'-'11' into an integer index (0-10)
@@ -56,10 +68,31 @@ export class Multiplication {
     // Loop through all signals: set to true ONLY if it matches the target index
     this.signalList.forEach((sig, index) => {
       sig.set(index === targetIndex);
-    });
 
+        this.baseValue.set(Number(action));
+      
+      
+    });
+    console.log("this.baseValue() "+this.baseValue());
+   
   }
 
+  tableData = computed<TimesTableConfig>(() => {
+    const value = this.baseValue();
+
+    return {
+      Value: value,
+      tableResults: Array.from({ length: 11 }, (_, i) => {
+        const multiplier = i + 1;
+
+        return {
+          multiplier,
+          result: value * multiplier
+        };
+      })
+    };
+  });
+ 
   ngOnInit(){
   
     
@@ -67,4 +100,5 @@ export class Multiplication {
 
   }
 
+  
 }
