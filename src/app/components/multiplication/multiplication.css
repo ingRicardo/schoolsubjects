@@ -1,0 +1,53 @@
+.btn-primary {
+  background-color: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+  transition: all 0.2s ease;
+   
+}
+
+.btn-primary:hover {
+  background-color: #1d4ed8;
+  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-primary:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row;        /* Align buttons side-by-side */
+  flex-wrap: wrap;            /* Wrap to next line on small screens */
+  gap: 12px;                  /* Consistent spacing between buttons */
+  justify-content: flex-start; /* Align to the left (use 'center' or 'flex-end' if needed) */
+  align-items: center;        /* Centered vertically if buttons are different heights */
+  padding: 16px 0;
+}
+
+/* Optional: Optional button baseline styling to match */
+.button-container button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #1c29db;
+  color: #ccc;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.button-container button:hover {
+  background-color: #f5f5f5;
+  color: #1c29db;
+}
