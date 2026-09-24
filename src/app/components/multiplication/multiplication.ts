@@ -59,6 +59,9 @@ export class Multiplication {
     { id: 'btn-11', label: '11', actionType: '11' }
   ];
 
+  basetable = signal<number | undefined>(undefined);
+  ranmulti = signal<number | undefined>(undefined);
+  ranresult = signal<number | undefined>(undefined);
 
   handleButtonClick(action: string): void {
     console.log(`Button action triggered: ${action}`);
@@ -74,7 +77,8 @@ export class Multiplication {
       
     });
     console.log("this.baseValue() "+this.baseValue());
-   
+
+    this.genRandTable();
   }
 
   tableData = computed<TimesTableConfig>(() => {
@@ -92,13 +96,23 @@ export class Multiplication {
       })
     };
   });
- 
-  ngOnInit(){
-  
-    
 
+  genRandTable(){
 
+    console.log("genRandTable");
+    const results = this.tableData().tableResults;
+    const randomIndex = Math.floor(Math.random() * results.length);
+    const randomRow = results[randomIndex];
+
+    console.log('Random Row:', randomRow);
+    console.log(this.baseValue() , randomRow.multiplier, randomRow.result);
+
+    this.basetable.set(this.baseValue());
+    this.ranmulti.set(randomRow.multiplier);
+    this.ranresult.set( randomRow.result);
   }
 
-  
+  ngOnInit(){
+
+  }
 }
