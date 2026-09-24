@@ -11,9 +11,21 @@
   }
 </div>
 
+
     <div class="table-container">
       <h2>Multiplication Table for {{ tableData().Value }}</h2>
-      
+        @if(this.basetable() != undefined){
+          <div class="timetablerow">
+
+          {{ this.basetable()}} X {{ this.ranmulti()}} = {{this.ranresult()}}
+
+          </div>
+
+        }
+          <div>
+            <button type="button" class="btn-primary" (click)="genRandTable()">play</button>
+          </div>
+  <!--
       <ul>
         @for (row of tableData().tableResults; track row.multiplier) {
           <li>
@@ -21,4 +33,5 @@
           </li>
         }
       </ul>
+  -->
     </div>

@@ -176,7 +176,9 @@
     margin: 1px;
 
   }
-
+.btn:active {
+  transform: scale(0.98);
+}
 .btn-primary {
   background-color: #2563eb;
   color: #ffffff;
