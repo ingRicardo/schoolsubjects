@@ -1,4 +1,6 @@
 <h1>Multiplications</h1>
+<p>Select a Time Table :</p>
+
 <!-- Declaring a shared action inside the template using @let -->
 @let fallbackAction = { actionType: 'generic-click' };
 
@@ -21,17 +23,27 @@
             <div class="input-row-group">
                <label for="baseValue"> {{ this.basetable()}} X {{ this.ranmulti()}} = </label>
                <input type="number" name="inputres" [(ngModel)]= "inputres" /></div>
-            </div>
-             
 
-          
-         
+            </div>
+
         }
           <div>
-            <button type="button" class="btn-primary" (click)="genRandTable()">Start</button>
-             @if(this.basetable() != undefined){
-            <button type="button" class="btn-primary" (click)="isResOk()">Check</button>
-             }
+            <!--
+            <button type="button" class="btn-primary" (click)="genRandTable()">Play</button>-->
+              @if(this.basetable() != undefined){
+                <button type="button" class="btn-primary" (click)="isResOk()">Check</button>
+              }
+          </div>
+          <div class="counter-card">
+              <h2>Points</h2>
+              @if(count() > 0){
+                <div class="count-display-good">{{ count() }}</div>
+              }@else {
+                <div class="count-display-bad">{{ count() }}</div>
+              }
+              
+            
+                 
           </div>
   <!--
       <ul>
