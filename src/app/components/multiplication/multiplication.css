@@ -9,7 +9,7 @@
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
   transition: all 0.2s ease;
-   
+  margin: 8px;
 }
 
 .btn-primary:hover {
@@ -55,5 +55,114 @@
 .timetablerow{
   font-size: xx-large;
   margin-bottom: 10px;
+}
+
+
+/* Container to force items onto the same horizontal line */
+.input-row-group {
+  display: flex;
+  flex-direction: row; /* Aligns label and input side-by-side */
+  align-items: center; /* Vertically centers the label text with the input box */
+  gap: 0.75rem;       /* Adds uniform spacing between label and input */
+  margin-bottom: 1.5rem;
+  font-family: sans-serif;
+}
+
+/* Label styling */
+.input-row-group label {
+  font-size: xx-large;
+  font-weight: 600;
+  color: #374151;
+  white-space: nowrap; /* Prevents the label from breaking onto multiple lines */
+}
+
+/* Input box styling */
+.input-row-group input {
+  padding: 0.6rem 0.875rem;
+  font-size: 1rem;
+  color: #1f2937;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Hover and Focus States */
+.input-row-group input:hover {
+  border-color: #9ca3af;
+}
+
+.input-row-group input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+
+/* Base Alert Structure shared by both states */
+.alert {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  max-width: 400px;
+  border-radius: 0.375rem;
+  font-family: sans-serif;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  animation: slideIn 0.25s ease-out;
+}
+
+.alert-icon {
+  font-weight: bold;
+  font-size: 1.15rem;
+}
+
+.alert-content {
+  flex-grow: 1;
+  font-size: 0.95rem;
+}
+
+.alert-close {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  opacity: 0.6;
+  color: inherit; /* Inherits the deep color of the alert parent */
+}
+
+.alert-close:hover {
+  opacity: 1;
+}
+
+/* --- SUCCESS (CORRECT) VARIANT --- */
+.alert-success {
+  background-color: #f0fdf4; /* Light green background */
+  border: 1px solid #bbf7d0;     /* Mint border */
+  border-left: 5px solid #22c55e; /* Vibrant green stripe */
+  color: #166534;                 /* Deep green text */
+}
+
+/* --- ERROR (WRONG) VARIANT --- */
+.alert-error {
+  background-color: #fef2f2; /* Light red/pink background */
+  border: 1px solid #fecaca;     /* Soft red border */
+  border-left: 5px solid #ef4444; /* Vibrant red stripe */
+  color: #991b1b;                 /* Deep red text */
+}
+
+/* Entry Animation */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
