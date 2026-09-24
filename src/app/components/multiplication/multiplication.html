@@ -17,13 +17,21 @@
         @if(this.basetable() != undefined){
           <div class="timetablerow">
 
-          {{ this.basetable()}} X {{ this.ranmulti()}} = {{this.ranresult()}}
+         
+            <div class="input-row-group">
+               <label for="baseValue"> {{ this.basetable()}} X {{ this.ranmulti()}} = </label>
+               <input type="number" name="inputres" [(ngModel)]= "inputres" /></div>
+            </div>
+             
 
-          </div>
-
+          
+         
         }
           <div>
-            <button type="button" class="btn-primary" (click)="genRandTable()">play</button>
+            <button type="button" class="btn-primary" (click)="genRandTable()">Start</button>
+             @if(this.basetable() != undefined){
+            <button type="button" class="btn-primary" (click)="isResOk()">Check</button>
+             }
           </div>
   <!--
       <ul>
@@ -35,3 +43,20 @@
       </ul>
   -->
     </div>
+<!-- Main Alert Box Container -->
+@switch (answerStatus()) {
+  @case ('correct') {
+    <div class="alert alert-success">
+      <span class="alert-icon">✓</span>
+      <div class="alert-content"><strong>CORRECT</strong> :)</div>
+      <button class="alert-close" (click)="answerStatus.set(null)">×</button>
+    </div>
+  }
+  @case ('wrong') {
+    <div class="alert alert-error">
+      <span class="alert-icon">✕</span>
+      <div class="alert-content"><strong>WRONG</strong> X</div>
+      <button class="alert-close" (click)="answerStatus.set(null)">×</button>
+    </div>
+  }
+}

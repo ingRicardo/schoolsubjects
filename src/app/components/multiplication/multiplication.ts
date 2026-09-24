@@ -1,4 +1,5 @@
 import { Component, computed, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms'
 
 interface ButtonConfig {
   id: string;
@@ -20,7 +21,7 @@ interface TimesTableConfig {
 
 @Component({
   selector: 'app-multiplication',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './multiplication.html',
   styleUrl: './multiplication.css',
   standalone: true
@@ -62,6 +63,7 @@ export class Multiplication {
   basetable = signal<number | undefined>(undefined);
   ranmulti = signal<number | undefined>(undefined);
   ranresult = signal<number | undefined>(undefined);
+  inputres = signal<number>(0);
 
   handleButtonClick(action: string): void {
     console.log(`Button action triggered: ${action}`);
@@ -110,8 +112,19 @@ export class Multiplication {
     this.basetable.set(this.baseValue());
     this.ranmulti.set(randomRow.multiplier);
     this.ranresult.set( randomRow.result);
+     
+    console.log(this.inputres());
   }
-
+    answerStatus = signal<'correct' | 'wrong' | null>(null);
+   isResOk(){
+    if(this.inputres() == this.ranresult()){
+        this.answerStatus.set('correct');
+    }else {
+       this.answerStatus.set('wrong');
+    }
+    this.inputres.set(0);
+    setTimeout(() => this.answerStatus.set(null), 4000);
+   }
   ngOnInit(){
 
   }
