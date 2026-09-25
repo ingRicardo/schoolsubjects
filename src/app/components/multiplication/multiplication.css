@@ -209,3 +209,143 @@ p {
 .table-container{
   width: 100%;
 }
+
+
+
+
+
+
+/* Full-screen dark overlay */
+.alert-overlay-name {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal box centered on screen */
+.alert-card-name {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  width: 320px;
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.alert-card-name h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.alert-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.alert-input:focus {
+  outline: none;
+  border-color: #1c29db;
+}
+
+/* Modal action buttons layout */
+.alert-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.button-name {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.btn-primary-name {
+  background-color: #1c29db;
+  color: white;
+}
+
+.btn-submit {
+  background-color: #1c29db;
+  color: white;
+}
+
+.btn-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+/* Greeting Banner Card */
+.greeting-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+  border-left: 4px solid #1c29db;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(28, 41, 219, 0.08);
+  max-width: 360px; 
+  animation: slideFadeIn 0.3s ease-out forwards;
+}
+
+.greeting-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.greeting-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.greeting-label {
+  font-size: 0.85rem;
+  color: #4b5563;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.greeting-name {
+  margin: 2px 0 0 0;
+  font-size: 1.3rem;
+  color: #1c29db;
+  font-weight: 700;
+}
+
+/* Entrance Animation */
+@keyframes slideFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,4 +1,41 @@
 <h1>Multiplications</h1>
+<!-- Trigger Button -->
+<button class="button-name btn-primary-name" (click)="openPrompt()">Enter Name</button>
+
+<!-- Display Saved Result -->
+@if (userName()) {
+  <div class="greeting-card">
+    <span class="greeting-icon">👋</span>
+    <div class="greeting-text">
+      <span class="greeting-label">Welcome,</span>
+      <h2 class="greeting-name">{{ userName() }}!</h2>
+    </div>
+  </div>
+}
+
+<!-- Centered Alert Modal Overlay -->
+@if (isOpen()) {
+  <div class="alert-overlay-name" (click)="closePrompt()">
+    <div class="alert-card-name" (click)="$event.stopPropagation()">
+      <h3>Please enter your name</h3>
+      
+      <input 
+        type="text" 
+        class="alert-input" 
+        placeholder="Your name..." 
+        [ngModel]="enteredName()" 
+        (ngModelChange)="enteredName.set($event)"
+        (keyup.enter)="submitName()"
+        autofocus
+      />
+
+      <div class="alert-actions">
+        <button class="button-name btn-secondary" (click)="closePrompt()">Cancel</button>
+        <button class="button-name btn-submit" (click)="submitName()" [disabled]="!enteredName().trim()">Submit</button>
+      </div>
+    </div>
+  </div>
+}
 <p>Select a Time Table :</p>
 
 <!-- Declaring a shared action inside the template using @let -->
