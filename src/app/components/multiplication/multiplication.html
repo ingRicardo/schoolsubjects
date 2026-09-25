@@ -36,6 +36,21 @@
     </div>
   </div>
 }
+@if(hasRewards()){
+  <div class="countdiv">{{userName()}} , rewards : {{rewardAmount()}}</div>
+
+  
+}
+@if(isRewardAlertOpen()){
+  <div class="alert-overlay-name">
+    <div class="alert-card-name">
+      <h3>CONGRATULATIONS! {{userName()}}, you earned a reward </h3> 
+      <div class="alert-actions">
+        <button class="button-name btn-secondary" (click)="closeReward()">OK</button>
+      </div>
+    </div>
+  </div>  
+}
 <p>Select a Time Table :</p>
 
 <!-- Declaring a shared action inside the template using @let -->
@@ -69,10 +84,10 @@
   </div>
   <div class="counter-card">
     <h2>Points</h2>
-    @if(count() > 0){
-    <div class="count-display-good">{{ count() }}</div>
+    @if(displaycount() > 0){
+    <div class="count-display-good">{{ displaycount() }}</div>
     }@else {
-    <div class="count-display-bad">{{ count() }}</div>
+    <div class="count-display-bad">{{ displaycount() }}</div>
     }
 
   </div>
@@ -87,23 +102,23 @@
   -->
 </div>
 <!-- Main Alert Box Container -->
-@switch (answerStatus()) {
-@case ('correct') {
-<div class="alert-overlay">
-  <div class="alert alert-success">
-    <span class="alert-icon">✓</span>
-    <div class="alert-content"><strong>CORRECT</strong> :)</div>
-    <button class="alert-close" (click)="answerStatus.set(null)">×</button>
+  @switch (answerStatus()) {
+  @case ('correct') {
+  <div class="alert-overlay">
+    <div class="alert alert-success">
+      <span class="alert-icon">✓</span>
+      <div class="alert-content"><strong>CORRECT</strong> :)</div>
+      <button class="alert-close" (click)="answerStatus.set(null)">×</button>
+    </div>
   </div>
-</div>
-}
-@case ('wrong') {
-<div class="alert-overlay">
-  <div class="alert alert-error">
-    <span class="alert-icon">✕</span>
-    <div class="alert-content"><strong>WRONG</strong> :(</div>
-    <button class="alert-close" (click)="answerStatus.set(null)">×</button>
+  }
+  @case ('wrong') {
+  <div class="alert-overlay">
+    <div class="alert alert-error">
+      <span class="alert-icon">✕</span>
+      <div class="alert-content"><strong>WRONG</strong> :(</div>
+      <button class="alert-close" (click)="answerStatus.set(null)">×</button>
+    </div>
   </div>
-</div>
-}
+  }
 }

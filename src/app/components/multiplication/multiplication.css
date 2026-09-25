@@ -349,3 +349,7 @@ p {
     transform: translateY(0);
   }
 }
+.countdiv {
+  font-weight: 200;
+  font-size: x-large;
+}

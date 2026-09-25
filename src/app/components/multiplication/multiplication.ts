@@ -20,6 +20,10 @@ interface TimesTableConfig {
   tableResults: MultiplicationResult[];
 }
 
+interface Reward {
+  id: number;
+  name: string;
+}
 @Component({
   selector: 'app-multiplication',
   imports: [FormsModule, CommonModule],
@@ -42,10 +46,10 @@ export class Multiplication {
   t11 = signal<boolean>(false);
 
   private signalList = [
-    this.t1, this.t2, this.t3, this.t4, this.t5, 
+    this.t1, this.t2, this.t3, this.t4, this.t5,
     this.t6, this.t7, this.t8, this.t9, this.t10, this.t11
   ];
-   baseValue = signal<number>(0);
+  baseValue = signal<number>(0);
 
   buttons: ButtonConfig[] = [
     { id: 'btn-1', label: '1', actionType: '1' },
@@ -66,6 +70,8 @@ export class Multiplication {
   ranresult = signal<number | undefined>(undefined);
   inputres = signal<number>(0);
 
+  hasRewards = signal<boolean>(false);
+  isRewardAlertOpen = signal<boolean>(false);
   // Modal visibility state
   isOpen = signal<boolean>(true);
 
@@ -74,6 +80,26 @@ export class Multiplication {
 
   // Submitted name state
   userName = signal<string | null>(null);
+
+
+  // Signal holding an empty array typed with interface
+  rewards = signal<Reward[]>([]);
+
+  closeReward() {
+    this.isRewardAlertOpen.set(false);
+    this.count.set(0);
+  }
+
+  // Method to add items to the array
+  addItem(newItem: Reward) {
+    this.rewards.update(currentItems => [...currentItems, newItem]);
+  }
+
+  // Method to clear the array
+  clearItems() {
+    this.rewards.set([]);
+  }
+
 
   openPrompt() {
     this.enteredName.set('');
@@ -100,11 +126,10 @@ export class Multiplication {
     this.signalList.forEach((sig, index) => {
       sig.set(index === targetIndex);
 
-        this.baseValue.set(Number(action));
-      
-      
+      this.baseValue.set(Number(action));
+
     });
-    console.log("this.baseValue() "+this.baseValue());
+    console.log("this.baseValue() " + this.baseValue());
 
     this.genRandTable();
   }
@@ -126,16 +151,18 @@ export class Multiplication {
   });
 
   count = signal<number>(0);
-
+  displaycount = signal<number>(0);
   increment(): void {
     this.count.update(val => val + 1);
+    this.displaycount.update(val => val + 1);
   }
 
   decrement(): void {
     this.count.update(val => val - 1);
+    this.displaycount.update(val => val - 1);
   }
 
-  genRandTable(){
+  genRandTable() {
 
     console.log("genRandTable");
     const results = this.tableData().tableResults;
@@ -143,27 +170,68 @@ export class Multiplication {
     const randomRow = results[randomIndex];
 
     console.log('Random Row:', randomRow);
-    console.log(this.baseValue() , randomRow.multiplier, randomRow.result);
+    console.log(this.baseValue(), randomRow.multiplier, randomRow.result);
 
     this.basetable.set(this.baseValue());
     this.ranmulti.set(randomRow.multiplier);
-    this.ranresult.set( randomRow.result);
-     
+    this.ranresult.set(randomRow.result);
+
     console.log(this.inputres());
+
   }
-    answerStatus = signal<'correct' | 'wrong' | null>(null);
-   isResOk(){
-    if(this.inputres() == this.ranresult()){
-        this.answerStatus.set('correct');
-        this.increment();
-    }else {
-       this.answerStatus.set('wrong');
-       this.decrement();
+  answerStatus = signal<'correct' | 'wrong' | null>(null);
+
+  isResOk() {
+    if (this.inputres() == this.ranresult()) {
+      this.answerStatus.set('correct');
+      this.increment();
+    } else {
+      this.answerStatus.set('wrong');
+      this.decrement();
+
     }
     this.inputres.set(0);
+    console.log("count : ", this.count());
+
+    this.calculatePoints();
+
+
     setTimeout(() => this.answerStatus.set(null), 4000);
-   }
-  ngOnInit(){
+  }
+
+  // Signal to store accumulated points
+  rewardAmount = signal<number>(0);
+  currentRewardPoints = 0;
+
+  // Method executing loop from 10 to 1000 stepping by 10
+  calculatePoints(): void {
+
+    for (let i = 10; i <= 1000; i += 10) {
+      if (i === this.count()) {
+        this.currentRewardPoints += 1; // Increment point on match
+        this.hasRewards.set(true);
+        this.isRewardAlertOpen.set(true);
+      }
+
+    }
+    /*
+    if (10 === this.count()) {
+      this.currentRewardPoints += 1; // Increment point on match
+      this.hasRewards.set(true);
+      this.isRewardAlertOpen.set(true);
+    }
+    */
+    console.log("currentRewardPoints ", this.currentRewardPoints);
+    // Update the reactive signal
+    this.rewardAmount.set(this.currentRewardPoints);
+
+  }
+
+  ngOnInit() {
+
+  }
+  ngOnChanges() {
+
 
   }
 }
