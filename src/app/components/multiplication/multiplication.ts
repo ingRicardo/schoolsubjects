@@ -1,5 +1,6 @@
 import { Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms'
+import { CommonModule } from '@angular/common';
 
 interface ButtonConfig {
   id: string;
@@ -21,7 +22,7 @@ interface TimesTableConfig {
 
 @Component({
   selector: 'app-multiplication',
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './multiplication.html',
   styleUrl: './multiplication.css',
   standalone: true
@@ -64,6 +65,31 @@ export class Multiplication {
   ranmulti = signal<number | undefined>(undefined);
   ranresult = signal<number | undefined>(undefined);
   inputres = signal<number>(0);
+
+  // Modal visibility state
+  isOpen = signal<boolean>(true);
+
+  // Temporary input binding
+  enteredName = signal<string>('');
+
+  // Submitted name state
+  userName = signal<string | null>(null);
+
+  openPrompt() {
+    this.enteredName.set('');
+    this.isOpen.set(true);
+  }
+
+  closePrompt() {
+    this.isOpen.set(false);
+  }
+
+  submitName() {
+    if (this.enteredName().trim()) {
+      this.userName.set(this.enteredName().trim());
+      this.closePrompt();
+    }
+  }
 
   handleButtonClick(action: string): void {
     console.log(`Button action triggered: ${action}`);
