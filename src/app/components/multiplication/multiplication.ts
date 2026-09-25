@@ -23,6 +23,7 @@ interface TimesTableConfig {
 interface Reward {
   id: number;
   name: string;
+  img: string;
 }
 @Component({
   selector: 'app-multiplication',
@@ -89,6 +90,18 @@ export class Multiplication {
     this.isRewardAlertOpen.set(false);
     this.count.set(0);
   }
+
+  selectedValue = signal<string>('');
+
+
+  pickRandom(): void {
+    const list = this.images();
+    if (list.length === 0) return;
+
+    const randomIndex = Math.floor(Math.random() * list.length);
+    this.selectedValue.set(list[randomIndex]);
+  }
+
 
   // Method to add items to the array
   addItem(newItem: Reward) {
@@ -203,6 +216,34 @@ export class Multiplication {
   rewardAmount = signal<number>(0);
   currentRewardPoints = 0;
 
+  images = signal<string[]>([
+    'https://cdn-icons-png.flaticon.com/512/1998/1998713.png',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQInvIFwj0-Mj8XEQKrPwNfWdXv0-St-SaS4vzlsuU1bxs1511RBOVVCEU&s=10',
+    'https://www.freeiconspng.com/thumbs/animal-icon-png/penguin-animal-icon-png-21.png',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuueu5UbyMFtInm-5QN7R6aKTX1NgLOOtwTWpABKePYw&s=10',
+    'https://cdn-icons-png.flaticon.com/512/616/616408.png',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTmt9AUoQxfkz4Nsq_g-gHQeanuvrePE_y_78sZ5gT1w&s=10',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDvhVrKS2j_9K2qzIIcEy0rqrx0KZeKLZk3gcHGn9MhQ&s=10',
+    'https://png.pngtree.com/png-clipart/20240629/original/pngtree-cute-little-brown-and-white-dog-icon-icon-vector-png-image_15442724.png',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZgqlxhd62L0_Ls7vXqk9iatzjg5o8cUH1OSihxiatxA&s=10',
+    'https://png.pngtree.com/png-vector/20230922/ourmid/pngtree-dinosaur-cartoon-clip-art-png-image_10145425.png',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBsZWRhIpAsHpS6g9F6tLqbB_l6Hkjw8ML55z66XM3WzfqFhCdvBWRMQs&s=10',
+    'https://png.pngtree.com/png-clipart/20240117/original/pngtree-3d-icon-animal-gradient-ui-material-bird-bird-ux-design-png-image_14129051.png',
+    'https://cdn3d.iconscout.com/3d/premium/thumb/cute-elephant-3d-icon-png-download-9169101.png',
+    'https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-o9Z7xSaIdzX5ofAaxTC5PGgbEn0cFv.png&w=1000&q=75',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUUiPyE5FYFQBgsDCDEZnencs-qYEZptY3h4m__Vi6HA&s=10',
+    'https://media.istockphoto.com/id/1972019005/vector/cute-fun-cartoon-owl-character-detailed-icon-realistic-animal-shape-with-big-eyes-beak-and.jpg?s=612x612&w=0&k=20&c=4Evti3Ed5Cp_b869C-QGNoWuTSGC2xLtArvcgABgWFA=',
+    'https://static.vecteezy.com/system/resources/previews/046/498/611/non_2x/turtle-animal-3d-design-free-png.png',
+    'https://cdn3d.iconscout.com/3d/premium/thumb/bear-3d-icon-png-download-3972343.png',
+    'https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-v4zUBw3nzVDWzDbHREpjooTeaVFGXW.png&w=1000&q=75',
+    'https://img.magnific.com/free-psd/3d-rendering-spring-icon_23-2151115352.jpg?semt=ais_hybrid&w=740&q=80',
+    'https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-5EQh5xJU8GYvfgVcULbg6qI2fkZAqf.png&w=1000&q=75',
+    'https://cdn3d.iconscout.com/3d/premium/thumb/charming-rhinoceros-figurine-3d-icon-png-download-10077241.png',
+    'https://img.magnific.com/premium-photo/3d-cartoon-capybara-isolated_1021802-48054.jpg?semt=ais_hybrid&w=740&q=80'
+
+  ]);
+
+
   // Method executing loop from 10 to 1000 stepping by 10
   calculatePoints(): void {
 
@@ -211,6 +252,18 @@ export class Multiplication {
         this.currentRewardPoints += 1; // Increment point on match
         this.hasRewards.set(true);
         this.isRewardAlertOpen.set(true);
+
+        this.pickRandom();
+        
+        const newReward: Reward = {
+          id: Date.now(), // Unique ID using timestamp
+          name: 'Gold Trophy',
+          img: this.selectedValue()
+        };
+        
+        console.log("selectedValue ", this.selectedValue())
+        this.addItem(newReward);
+
       }
 
     }

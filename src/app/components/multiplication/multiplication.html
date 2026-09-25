@@ -37,14 +37,21 @@
   </div>
 }
 @if(hasRewards()){
-  <div class="countdiv">{{userName()}} , rewards : {{rewardAmount()}}</div>
-
+  <div class="countdiv">Hey {{userName()}} ,this are your rewards : <span style="color: blue;">{{rewardAmount()}}</span> </div>
+  <div class="rewards-grid">
+  @for (reward of rewards(); track reward.id) {
+    <div class="reward-card">
+      <img [src]="reward.img" [alt]="reward.name" width="200" height="200" />
+      <span>{{ reward.name }}</span>
+    </div>
+  }  
+</div>
   
 }
 @if(isRewardAlertOpen()){
   <div class="alert-overlay-name">
     <div class="alert-card-name">
-      <h3>CONGRATULATIONS! {{userName()}}, you earned a reward </h3> 
+      <h3>CONGRATULATIONS! {{userName()}}, you earned a reward 😊</h3> 
       <div class="alert-actions">
         <button class="button-name btn-secondary" (click)="closeReward()">OK</button>
       </div>
