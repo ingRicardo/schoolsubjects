@@ -25,6 +25,9 @@ interface Reward {
   name: string;
   img: string;
 }
+
+export type TabType = 'multiplication' | 'addition' | 'subtraction';
+
 @Component({
   selector: 'app-multiplication',
   imports: [FormsModule, CommonModule],
@@ -81,6 +84,13 @@ export class Multiplication {
 
   // Submitted name state
   userName = signal<string | null>(null);
+
+
+  activeTab = signal<TabType>('multiplication');
+
+  selectTab(tab: TabType): void {
+    this.activeTab.set(tab);
+  }
 
 
   // Signal holding an empty array typed with interface
