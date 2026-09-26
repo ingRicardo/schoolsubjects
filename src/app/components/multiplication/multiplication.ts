@@ -192,6 +192,13 @@ export class Multiplication {
     console.log(this.inputres());
 
   }
+
+  // Method to set a random integer from 1 to 11
+  generateRandomBaseValue(): void {
+    const randomNumber = Math.floor(Math.random() * 11) + 1;
+    this.baseValue.set(randomNumber);
+  }
+
   answerStatus = signal<'correct' | 'wrong' | null>(null);
 
   isResOk() {
@@ -208,6 +215,8 @@ export class Multiplication {
 
     this.calculatePoints();
 
+    this.generateRandomBaseValue();
+    this.genRandTable();
 
     setTimeout(() => this.answerStatus.set(null), 4000);
   }
