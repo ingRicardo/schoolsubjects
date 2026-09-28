@@ -88,6 +88,17 @@ export class Multiplication {
 
   activeTab = signal<TabType>('multiplication');
 
+
+  randomAddNumber1 = signal<number>(0);
+  randomAddNumber2 = signal<number>(0);
+  // Method to pick a value between 100 and 999
+  generateThreeDigitNumber(): void {
+    const value = Math.floor(Math.random() * 900) + 100;
+    this.randomAddNumber1.set(value);
+    const value2 = Math.floor(Math.random() * 900) + 100;
+    this.randomAddNumber2.set(value2);
+  }
+
   selectTab(tab: TabType): void {
     this.activeTab.set(tab);
   }

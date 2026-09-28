@@ -168,6 +168,14 @@
         <div class="tab-panel">
           <h3>Additions</h3>
           <p>Math Additions problem sets and activities go here.</p>
+          <div>
+            {{randomAddNumber1()}}
+          </div>
+          <div>
+            {{randomAddNumber2()}}
+          </div>
+
+          <button type="button" class="btn-primary" (click)="generateThreeDigitNumber()">generate</button>
         </div>
       }
       @case ('subtraction') {
