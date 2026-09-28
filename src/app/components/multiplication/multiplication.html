@@ -159,6 +159,25 @@
     <div class="tab-panel">
       <h3>Subtractions </h3>
       <p>Math Subtractions problem sets and activities go here.</p>
+      <div class="input-row-group">
+        <div class="timetablerow">
+          <label>
+            {{randomSubNumber1()}} -
+          </label>
+          <div>
+            <label>
+              {{randomSubNumber2()}}
+            </label>
+          </div>
+          <div>
+            -------------------
+          </div>
+
+          <input type="number" name="inputsubres" [(ngModel)]="inputsubres">
+
+          <button type="button" class="btn-primary" (click)="generateSubtraction()">Check</button>
+        </div>
+      </div>
     </div>
     }
     }
