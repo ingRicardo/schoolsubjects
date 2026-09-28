@@ -175,7 +175,7 @@
             {{randomAddNumber2()}}
           </div>
 
-          <button type="button" class="btn-primary" (click)="generateThreeDigitNumber()">generate</button>
+          <button type="button" class="btn-primary" [disabled]="true" (click)="generateThreeDigitNumber()">generate</button>
         </div>
       }
       @case ('subtraction') {
