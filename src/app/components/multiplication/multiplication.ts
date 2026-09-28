@@ -72,7 +72,7 @@ export class Multiplication {
   basetable = signal<number | undefined>(undefined);
   ranmulti = signal<number | undefined>(undefined);
   ranresult = signal<number | undefined>(undefined);
-  inputres = signal<number>(0);
+  inputres = signal<number | null>(null);
 
   hasRewards = signal<boolean>(false);
   isRewardAlertOpen = signal<boolean>(false);
@@ -91,12 +91,20 @@ export class Multiplication {
 
   randomAddNumber1 = signal<number>(0);
   randomAddNumber2 = signal<number>(0);
+  addires = signal<number | null>(null);
+  inputaddires = signal<number | null>(null);
+
   // Method to pick a value between 100 and 999
-  generateThreeDigitNumber(): void {
-    const value = Math.floor(Math.random() * 900) + 100;
-    this.randomAddNumber1.set(value);
-    const value2 = Math.floor(Math.random() * 900) + 100;
-    this.randomAddNumber2.set(value2);
+  generateAddition(): void {
+
+    if (this.inputaddires() != null) {
+
+      this.idAddiResOk();
+
+      this.calculatePoints();
+
+    } else
+      return
   }
 
   selectTab(tab: TabType): void {
@@ -186,6 +194,7 @@ export class Multiplication {
 
   count = signal<number>(0);
   displaycount = signal<number>(0);
+
   increment(): void {
     this.count.update(val => val + 1);
     this.displaycount.update(val => val + 1);
@@ -222,7 +231,30 @@ export class Multiplication {
 
   answerStatus = signal<'correct' | 'wrong' | null>(null);
 
+  idAddiResOk() {
+    console.log(this.inputaddires(), this.addires());
+    if (this.inputaddires() == this.addires()) {
+      this.answerStatus.set('correct');
+      this.increment();
+    } else {
+      this.answerStatus.set('wrong');
+      this.decrement();
+    }
+    const value = Math.floor(Math.random() * 900) + 100;
+    this.randomAddNumber1.set(value);
+    const value2 = Math.floor(Math.random() * 900) + 100;
+    this.randomAddNumber2.set(value2);
+    this.addires.set(this.randomAddNumber1() + this.randomAddNumber2());
+    this.inputaddires.set(null);
+
+    setTimeout(() => this.answerStatus.set(null), 4000);
+
+  }
   isResOk() {
+
+    if(this.inputres() == null)
+      return
+
     if (this.inputres() == this.ranresult()) {
       this.answerStatus.set('correct');
       this.increment();
@@ -231,7 +263,7 @@ export class Multiplication {
       this.decrement();
 
     }
-    this.inputres.set(0);
+    this.inputres.set(null);
     console.log("count : ", this.count());
 
     this.calculatePoints();
@@ -273,7 +305,6 @@ export class Multiplication {
 
   ]);
 
-
   // Method executing loop from 10 to 1000 stepping by 10
   calculatePoints(): void {
 
@@ -284,26 +315,19 @@ export class Multiplication {
         this.isRewardAlertOpen.set(true);
 
         this.pickRandom();
-        
+
         const newReward: Reward = {
           id: Date.now(), // Unique ID using timestamp
           name: 'Gold Trophy',
           img: this.selectedValue()
         };
-        
+
         console.log("selectedValue ", this.selectedValue())
         this.addItem(newReward);
 
       }
 
     }
-    /*
-    if (10 === this.count()) {
-      this.currentRewardPoints += 1; // Increment point on match
-      this.hasRewards.set(true);
-      this.isRewardAlertOpen.set(true);
-    }
-    */
     console.log("currentRewardPoints ", this.currentRewardPoints);
     // Update the reactive signal
     this.rewardAmount.set(this.currentRewardPoints);
@@ -311,6 +335,11 @@ export class Multiplication {
   }
 
   ngOnInit() {
+    const value = Math.floor(Math.random() * 900) + 100;
+    this.randomAddNumber1.set(value);
+    const value2 = Math.floor(Math.random() * 900) + 100;
+    this.randomAddNumber2.set(value2);
+    this.addires.set(this.randomAddNumber1() + this.randomAddNumber2());
 
   }
   ngOnChanges() {

@@ -1,15 +1,6 @@
 <h1>Operations</h1>
 <!-- Trigger Button -->
 <button class="button-name btn-primary-name" (click)="openPrompt()">Enter Name</button>
-  <div class="counter-card">
-    <h2>Points</h2>
-    @if(displaycount() > 0){
-    <div class="count-display-good">{{ displaycount() }}</div>
-    }@else {
-    <div class="count-display-bad">{{ displaycount() }}</div>
-    }
-
-  </div>
 <!-- Display Saved Result -->
 @if (userName()) {
   <div class="greeting-card">
@@ -20,6 +11,28 @@
     </div>
   </div>
 }
+@if(hasRewards()){
+  <div class="countdiv">Hey {{userName()}} ,this are your rewards : <span style="color: blue;">{{rewardAmount()}}</span> </div>
+  <div class="rewards-grid">
+  @for (reward of rewards(); track reward.id) {
+    <div class="reward-card">
+      <img [src]="reward.img" [alt]="reward.name" width="200" height="200" />
+      <span>{{ reward.name }}</span>
+    </div>
+  }  
+</div>
+  
+}
+  <div class="counter-card">
+    <h2>Points</h2>
+    @if(displaycount() > 0){
+    <div class="count-display-good">{{ displaycount() }}</div>
+    }@else {
+    <div class="count-display-bad">{{ displaycount() }}</div>
+    }
+
+  </div>
+
 
 <!-- Centered Alert Modal Overlay -->
 @if (isOpen()) {
@@ -44,18 +57,7 @@
     </div>
   </div>
 }
-@if(hasRewards()){
-  <div class="countdiv">Hey {{userName()}} ,this are your rewards : <span style="color: blue;">{{rewardAmount()}}</span> </div>
-  <div class="rewards-grid">
-  @for (reward of rewards(); track reward.id) {
-    <div class="reward-card">
-      <img [src]="reward.img" [alt]="reward.name" width="200" height="200" />
-      <span>{{ reward.name }}</span>
-    </div>
-  }  
-</div>
-  
-}
+
 @if(isRewardAlertOpen()){
   <div class="alert-overlay-name">
     <div class="alert-card-name">
@@ -141,41 +143,29 @@
                 </ul>
             -->
           </div>
-          <!-- Main Alert Box Container -->
-            @switch (answerStatus()) {
-            @case ('correct') {
-            <div class="alert-overlay">
-              <div class="alert alert-success">
-                <span class="alert-icon">✓</span>
-                <div class="alert-content"><strong>CORRECT</strong> :)</div>
-                <button class="alert-close" (click)="answerStatus.set(null)">×</button>
-              </div>
-            </div>
-            }
-            @case ('wrong') {
-            <div class="alert-overlay">
-              <div class="alert alert-error">
-                <span class="alert-icon">✕</span>
-                <div class="alert-content"><strong>WRONG</strong> :(</div>
-                <button class="alert-close" (click)="answerStatus.set(null)">×</button>
-              </div>
-            </div>
-            }
-          }
+
         </div>
       }
       @case ('addition') {
         <div class="tab-panel">
-          <h3>Additions</h3>
+          <h3>Additions (+)</h3>
           <p>Math Additions problem sets and activities go here.</p>
           <div>
-            {{randomAddNumber1()}}
+            {{randomAddNumber1()}} + 
           </div>
           <div>
             {{randomAddNumber2()}}
           </div>
-
-          <button type="button" class="btn-primary" [disabled]="true" (click)="generateThreeDigitNumber()">generate</button>
+          <div>
+            -------------------
+          </div>
+          <div>
+            <input type="number" name="inputaddires" [(ngModel)]="inputaddires" >
+          </div>
+          <div style="visibility: hidden;">
+            {{addires()}}
+          </div>
+          <button type="button" class="btn-primary" (click)="generateAddition()">Check</button>
         </div>
       }
       @case ('subtraction') {
@@ -188,3 +178,24 @@
   </div>
 </div>
 
+      <!-- Main Alert Box Container -->
+        @switch (answerStatus()) {
+        @case ('correct') {
+        <div class="alert-overlay">
+          <div class="alert alert-success">
+            <span class="alert-icon">✓</span>
+            <div class="alert-content"><strong>CORRECT</strong> :)</div>
+            <button class="alert-close" (click)="answerStatus.set(null)">×</button>
+          </div>
+        </div>
+        }
+        @case ('wrong') {
+        <div class="alert-overlay">
+          <div class="alert alert-error">
+            <span class="alert-icon">✕</span>
+            <div class="alert-content"><strong>WRONG</strong> :(</div>
+            <button class="alert-close" (click)="answerStatus.set(null)">×</button>
+          </div>
+        </div>
+        }
+      }
