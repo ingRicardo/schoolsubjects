@@ -94,7 +94,23 @@ export class Multiplication {
   addires = signal<number | null>(null);
   inputaddires = signal<number | null>(null);
 
-  // Method to pick a value between 100 and 999
+  randomSubNumber1 = signal<number>(0);
+  randomSubNumber2 = signal<number>(0);
+  subres = signal<number | null>(null);
+  inputsubres = signal<number | null>(null);
+
+
+
+  generateSubtraction(): void {
+   if( this.inputsubres() != null){
+
+    this.isSubtResOk();
+    this.calculatePoints();
+
+    } else
+        return
+  }
+  
   generateAddition(): void {
 
     if (this.inputaddires() != null) {
@@ -250,6 +266,26 @@ export class Multiplication {
     setTimeout(() => this.answerStatus.set(null), 4000);
 
   }
+
+    isSubtResOk() {
+    console.log(this.inputsubres(), this.subres());
+    if (this.inputsubres() == this.subres()) {
+      this.answerStatus.set('correct');
+      this.increment();
+    } else {
+      this.answerStatus.set('wrong');
+      this.decrement();
+    }
+    const value = Math.floor(Math.random() * 900) + 100;
+    this.randomSubNumber1.set(value);
+    const value2 = Math.floor(Math.random() * 900) + 100;
+    this.randomSubNumber2.set(value2);
+    this.subres.set(this.randomSubNumber1() + this.randomSubNumber2());
+    this.inputsubres.set(null);
+
+    setTimeout(() => this.answerStatus.set(null), 4000);
+
+  }
   isResOk() {
 
     if (this.inputres() == null)
@@ -340,6 +376,13 @@ export class Multiplication {
     const value2 = Math.floor(Math.random() * 900) + 100;
     this.randomAddNumber2.set(value2);
     this.addires.set(this.randomAddNumber1() + this.randomAddNumber2());
+
+    const value3 = Math.floor(Math.random() * 900) + 100;
+    this.randomSubNumber1.set(value);
+    const value4 = Math.floor(Math.random() * 900) + 100;
+    this.randomSubNumber2.set(value2);
+    this.subres.set(this.randomSubNumber1() + this.randomSubNumber2());
+    this.inputsubres.set(null);
 
   }
   ngOnChanges() {
