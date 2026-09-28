@@ -1,131 +1,188 @@
-<h1>Multiplications</h1>
+<h1>Operations</h1>
 <!-- Trigger Button -->
 <button class="button-name btn-primary-name" (click)="openPrompt()">Enter Name</button>
-
 <!-- Display Saved Result -->
 @if (userName()) {
-  <div class="greeting-card">
-    <span class="greeting-icon">👋</span>
-    <div class="greeting-text">
-      <span class="greeting-label">Welcome,</span>
-      <h2 class="greeting-name">{{ userName() }}!</h2>
-    </div>
+<div class="greeting-card">
+  <span class="greeting-icon">👋</span>
+  <div class="greeting-text">
+    <span class="greeting-label">Welcome,</span>
+    <h2 class="greeting-name">{{ userName() }}!</h2>
   </div>
+</div>
 }
+@if(hasRewards()){
+<div class="countdiv">Hey {{userName()}} ,this are your rewards : <span style="color: blue;">{{rewardAmount()}}</span>
+</div>
+<div class="rewards-grid">
+  @for (reward of rewards(); track reward.id) {
+  <div class="reward-card">
+    <img [src]="reward.img" [alt]="reward.name" width="200" height="200" />
+    <span>{{ reward.name }}</span>
+  </div>
+  }
+</div>
+
+}
+<div class="counter-card">
+  <h2>Points</h2>
+  @if(displaycount() > 0){
+  <div class="count-display-good">{{ displaycount() }}</div>
+  }@else {
+  <div class="count-display-bad">{{ displaycount() }}</div>
+  }
+
+</div>
+
 
 <!-- Centered Alert Modal Overlay -->
 @if (isOpen()) {
-  <div class="alert-overlay-name" (click)="closePrompt()">
-    <div class="alert-card-name" (click)="$event.stopPropagation()">
-      <h3>Please enter your name</h3>
-      
-      <input 
-        type="text" 
-        class="alert-input" 
-        placeholder="Your name..." 
-        [ngModel]="enteredName()" 
-        (ngModelChange)="enteredName.set($event)"
-        (keyup.enter)="submitName()"
-        autofocus
-      />
+<div class="alert-overlay-name" (click)="closePrompt()">
+  <div class="alert-card-name" (click)="$event.stopPropagation()">
+    <h3>Please enter your name</h3>
 
-      <div class="alert-actions">
-        <button class="button-name btn-secondary" (click)="closePrompt()">Cancel</button>
-        <button class="button-name btn-submit" (click)="submitName()" [disabled]="!enteredName().trim()">Submit</button>
-      </div>
+    <input type="text" class="alert-input" placeholder="Your name..." [ngModel]="enteredName()"
+      (ngModelChange)="enteredName.set($event)" (keyup.enter)="submitName()" autofocus />
+
+    <div class="alert-actions">
+      <button class="button-name btn-secondary" (click)="closePrompt()">Cancel</button>
+      <button class="button-name btn-submit" (click)="submitName()" [disabled]="!enteredName().trim()">Submit</button>
     </div>
   </div>
-}
-@if(hasRewards()){
-  <div class="countdiv">Hey {{userName()}} ,this are your rewards : <span style="color: blue;">{{rewardAmount()}}</span> </div>
-  <div class="rewards-grid">
-  @for (reward of rewards(); track reward.id) {
-    <div class="reward-card">
-      <img [src]="reward.img" [alt]="reward.name" width="200" height="200" />
-      <span>{{ reward.name }}</span>
-    </div>
-  }  
 </div>
-  
 }
+
 @if(isRewardAlertOpen()){
-  <div class="alert-overlay-name">
-    <div class="alert-card-name">
-      <h3>CONGRATULATIONS! {{userName()}}, you earned a reward 😊</h3> 
-      <div class="alert-actions">
-        <button class="button-name btn-secondary" (click)="closeReward()">OK</button>
+<div class="alert-overlay-name">
+  <div class="alert-card-name">
+    <h3>CONGRATULATIONS! {{userName()}}, you earned a reward 😊</h3>
+    <div class="alert-actions">
+      <button class="button-name btn-secondary" (click)="closeReward()">OK</button>
+    </div>
+  </div>
+</div>
+}
+
+<div class="tabs-container">
+  <!-- Tab Header Bar -->
+  <div class="tabs-header">
+    <button class="tab-btn" [class.active]="activeTab() === 'multiplication'" (click)="selectTab('multiplication')">
+      Multiplication
+    </button>
+
+    <button class="tab-btn" [class.active]="activeTab() === 'addition'" (click)="selectTab('addition')">
+      Addition
+    </button>
+
+    <button class="tab-btn" [class.active]="activeTab() === 'subtraction'" (click)="selectTab('subtraction')">
+      Subtraction
+    </button>
+  </div>
+
+  <!-- Tab Content Body -->
+  <div class="tabs-body">
+    @switch (activeTab()) {
+    @case ('multiplication') {
+    <div class="tab-panel">
+      <h3>Multiplication Panel</h3>
+      <p>Select a Time Table :</p>
+
+      <!-- Declaring a shared action inside the template using @let -->
+      @let fallbackAction = { actionType: 'generic-click' };
+
+      <div class="button-container">
+        @for (btn of buttons; track btn.id) {
+        <!-- Merging fallback object properties with your array items -->
+        <button (click)="handleButtonClick(( { ...fallbackAction, ...btn } ).actionType)">
+          {{ btn.label }}
+        </button>
+        }
+      </div>
+
+      <div class="table-container">
+        <h2>Multiplication Table for {{ tableData().Value }}</h2>
+        @if(this.basetable() != undefined){
+        <div class="timetablerow">
+          <div class="input-row-group">
+            <label for="baseValue"> {{ this.basetable()}} X {{ this.ranmulti()}} = </label>
+            <input type="number" name="inputres" [(ngModel)]="inputres" />
+          </div>
+        </div>
+        }
+        <div>
+          <!--
+                      <button type="button" class="btn-primary" (click)="genRandTable()">Play</button>-->
+          @if(this.basetable() != undefined){
+          <button type="button" class="btn-primary" (click)="isResOk()">Check</button>
+          }
+        </div>
+
+        <!--
+                <ul>
+                  @for (row of tableData().tableResults; track row.multiplier) {
+                    <li>
+                      {{ tableData().Value }} x {{ row.multiplier }} = {{ row.result }}
+                    </li>
+                  }
+                </ul>
+            -->
+      </div>
+
+    </div>
+    }
+    @case ('addition') {
+    <div class="tab-panel">
+      <h3>Additions (+)</h3>
+      <p>Math Additions problem sets and activities go here.</p>
+      <div class="input-row-group">
+        <div class="timetablerow">
+          <label>
+            {{randomAddNumber1()}} +
+          </label>
+          <div>
+            <label>
+              {{randomAddNumber2()}}
+            </label>
+          </div>
+          <div>
+            -------------------
+          </div>
+
+          <input type="number" name="inputaddires" [(ngModel)]="inputaddires">
+
+          <button type="button" class="btn-primary" (click)="generateAddition()">Check</button>
+        </div>
       </div>
     </div>
-  </div>  
-}
-<p>Select a Time Table :</p>
-
-<!-- Declaring a shared action inside the template using @let -->
-@let fallbackAction = { actionType: 'generic-click' };
-
-<div class="button-container">
-  @for (btn of buttons; track btn.id) {
-  <!-- Merging fallback object properties with your array items -->
-  <button (click)="handleButtonClick(( { ...fallbackAction, ...btn } ).actionType)">
-    {{ btn.label }}
-  </button>
-  }
-</div>
-
-<div class="table-container">
-  <h2>Multiplication Table for {{ tableData().Value }}</h2>
-  @if(this.basetable() != undefined){
-  <div class="timetablerow">
-    <div class="input-row-group">
-      <label for="baseValue"> {{ this.basetable()}} X {{ this.ranmulti()}} = </label>
-      <input type="number" name="inputres" [(ngModel)]="inputres" />
+    }
+    @case ('subtraction') {
+    <div class="tab-panel">
+      <h3>Subtractions </h3>
+      <p>Math Subtractions problem sets and activities go here.</p>
     </div>
-  </div>
-  }
-  <div>
-    <!--
-            <button type="button" class="btn-primary" (click)="genRandTable()">Play</button>-->
-    @if(this.basetable() != undefined){
-    <button type="button" class="btn-primary" (click)="isResOk()">Check</button>
+    }
     }
   </div>
-  <div class="counter-card">
-    <h2>Points</h2>
-    @if(displaycount() > 0){
-    <div class="count-display-good">{{ displaycount() }}</div>
-    }@else {
-    <div class="count-display-bad">{{ displaycount() }}</div>
-    }
-
-  </div>
-  <!--
-      <ul>
-        @for (row of tableData().tableResults; track row.multiplier) {
-          <li>
-            {{ tableData().Value }} x {{ row.multiplier }} = {{ row.result }}
-          </li>
-        }
-      </ul>
-  -->
 </div>
+
 <!-- Main Alert Box Container -->
-  @switch (answerStatus()) {
-  @case ('correct') {
-  <div class="alert-overlay">
-    <div class="alert alert-success">
-      <span class="alert-icon">✓</span>
-      <div class="alert-content"><strong>CORRECT</strong> :)</div>
-      <button class="alert-close" (click)="answerStatus.set(null)">×</button>
-    </div>
+@switch (answerStatus()) {
+@case ('correct') {
+<div class="alert-overlay">
+  <div class="alert alert-success">
+    <span class="alert-icon">✓</span>
+    <div class="alert-content"><strong>CORRECT</strong> :)</div>
+    <button class="alert-close" (click)="answerStatus.set(null)">×</button>
   </div>
-  }
-  @case ('wrong') {
-  <div class="alert-overlay">
-    <div class="alert alert-error">
-      <span class="alert-icon">✕</span>
-      <div class="alert-content"><strong>WRONG</strong> :(</div>
-      <button class="alert-close" (click)="answerStatus.set(null)">×</button>
-    </div>
+</div>
+}
+@case ('wrong') {
+<div class="alert-overlay">
+  <div class="alert alert-error">
+    <span class="alert-icon">✕</span>
+    <div class="alert-content"><strong>WRONG</strong> :(</div>
+    <button class="alert-close" (click)="answerStatus.set(null)">×</button>
   </div>
-  }
+</div>
+}
 }
