@@ -252,7 +252,7 @@ export class Multiplication {
   }
   isResOk() {
 
-    if(this.inputres() == null)
+    if (this.inputres() == null)
       return
 
     if (this.inputres() == this.ranresult()) {
